@@ -17,7 +17,6 @@ provider:
     role: arn:aws:iam::846706155148:role/LabRole
   environment:
     DB_SECRET: ${self:custom.secrets.${sls:stage}, 'dev/alumnos'}
-    AWS_REGION: us-east-1
 
 functions:
   listar:
