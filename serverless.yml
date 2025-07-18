@@ -1,18 +1,23 @@
 org: yit7316
 service: api-alumnos-rds
 
+custom:
+  secrets:
+    dev: dev/alumnos
+    test: test/alumnos
+    prod: prod/alumnos
+
 provider:
   name: aws
   runtime: python3.13
   memorySize: 1024
   timeout: 20
+  region: us-east-1
   iam:
     role: arn:aws:iam::846706155148:role/LabRole
   environment:
-    DB_HOST: /rds_mysql_alumnos/punto_enlace
-    DB_USER: user_${sls:stage}
-    DB_PASSWORD: /rds_mysql_alumnos/user_${sls:stage}/password
-    DB_NAME: ${sls:stage}
+    DB_SECRET: ${self:custom.secrets.${sls:stage}, 'dev/alumnos'}
+    AWS_REGION: us-east-1
 
 functions:
   listar:
